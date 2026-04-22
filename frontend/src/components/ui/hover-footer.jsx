@@ -41,7 +41,7 @@ export const TextHoverEffect = ({
       ref={svgRef}
       width="100%"
       height="100%"
-      viewBox="0 0 300 100"
+      viewBox="0 0 600 100"
       xmlns="http://www.w3.org/2000/svg"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -105,8 +105,8 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.3"
-        className="fill-transparent stroke-[#3ca2fa] font-[helvetica] text-7xl font-bold 
-        dark:stroke-[#3ca2fa99]"
+        className="fill-transparent stroke-white font-[helvetica] text-7xl font-bold 
+        dark:stroke-white/50"
         initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
         animate={{
           strokeDashoffset: 0,
@@ -142,7 +142,7 @@ export const FooterBackgroundGradient = () => {
       className="absolute inset-0 z-0"
       style={{
         background:
-          "radial-gradient(125% 125% at 50% 10%, #0F0F1166 50%, #3ca2fa33 100%)",
+          "radial-gradient(125% 125% at 50% 10%, #0F0F1166 50%, #ffffff11 100%)",
       }}
     />
   );
@@ -177,17 +177,17 @@ export default function HoverFooter() {
   // Contact info data
   const contactInfo = [
     {
-      icon: <Mail size={18} className="text-[#3ca2fa]" />,
+      icon: <Mail size={18} className="text-white" />,
       text: "hello@nurui.com",
       href: "mailto:hello@nurui.com",
     },
     {
-      icon: <Phone size={18} className="text-[#3ca2fa]" />,
+      icon: <Phone size={18} className="text-white" />,
       text: "+91 86373 73116",
       href: "tel:+918637373116",
     },
     {
-      icon: <MapPin size={18} className="text-[#3ca2fa]" />,
+      icon: <MapPin size={18} className="text-white" />,
       text: "Sylhet, Bangladesh",
     },
   ];
@@ -204,7 +204,7 @@ export default function HoverFooter() {
           {/* Brand section */}
           <div className="flex flex-col space-y-4">
             <div className="flex items-center space-x-2">
-              <span className="text-[#3ca2fa] text-3xl font-extrabold">
+              <span className="text-white text-3xl font-extrabold">
                 &hearts;
               </span>
               <span className="text-white text-3xl font-bold">QuickCover</span>
@@ -225,12 +225,12 @@ export default function HoverFooter() {
                   <li key={link.label} className="relative">
                     <a
                       href={link.href}
-                      className="text-gray-300 hover:text-[#3ca2fa] transition-colors"
+                      className="text-gray-300 hover:text-white transition-colors"
                     >
                       {link.label}
                     </a>
                     {link.pulse && (
-                      <span className="absolute top-0 right-[-10px] w-2 h-2 rounded-full bg-[#3ca2fa] animate-pulse"></span>
+                      <span className="absolute top-0 right-[-10px] w-2 h-2 rounded-full bg-white animate-pulse"></span>
                     )}
                   </li>
                 ))}
@@ -250,12 +250,12 @@ export default function HoverFooter() {
                   {item.href ? (
                     <a
                       href={item.href}
-                      className="hover:text-[#3ca2fa] transition-colors"
+                      className="hover:text-white transition-colors"
                     >
                       {item.text}
                     </a>
                   ) : (
-                    <span className="hover:text-[#3ca2fa] transition-colors">
+                    <span className="hover:text-white transition-colors">
                       {item.text}
                     </span>
                   )}
@@ -276,7 +276,7 @@ export default function HoverFooter() {
                 key={label}
                 href={href}
                 aria-label={label}
-                className="hover:text-[#3ca2fa] transition-colors"
+                className="hover:text-white transition-colors"
               >
                 {icon}
               </a>

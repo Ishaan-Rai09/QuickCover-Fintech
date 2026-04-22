@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: ["class"],
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,24 +8,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#F9FAFB',           // light gray background
-        card: '#FFFFFF',         // white cards
-        border: '#E5E7EB',       // light borders
-        primary: '#2563EB',      // professional blue
-        success: '#16A34A',      // green
-        warning: '#D97706',      // amber
-        danger: '#DC2626',       // red
-        textPrimary: '#111827',  // slate 900
-        textMuted: '#6B7280',    // gray 500
+        background: 'hsl(var(--background) / <alpha-value>)',
+        foreground: 'hsl(var(--foreground) / <alpha-value>)',
+        card: 'hsl(var(--card) / <alpha-value>)',
+        border: 'hsl(var(--border) / <alpha-value>)',
+        primary: 'hsl(var(--primary) / <alpha-value>)',
+        'primary-foreground': 'hsl(var(--primary-foreground) / <alpha-value>)',
+        muted: 'hsl(var(--muted) / <alpha-value>)',
+        'muted-foreground': 'hsl(var(--muted-foreground) / <alpha-value>)',
+        success: 'hsl(var(--success) / <alpha-value>)',
+        warning: 'hsl(var(--warning) / <alpha-value>)',
+        danger: 'hsl(var(--danger) / <alpha-value>)',
+        bg: 'hsl(var(--background) / <alpha-value>)',
+        textPrimary: 'hsl(var(--foreground) / <alpha-value>)',
+        textMuted: 'hsl(var(--muted-foreground) / <alpha-value>)',
       },
       fontFamily: {
-        body: ['"Inter"', 'sans-serif'],
-        heading: ['"Inter"', 'sans-serif'],
+        body: ['"Sora"', 'sans-serif'],
+        heading: ['"Sora"', 'sans-serif'],
       },
       boxShadow: {
-        'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
-        'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+        sm: '0 12px 30px rgba(3, 7, 18, 0.12)',
+        DEFAULT: '0 24px 60px rgba(3, 7, 18, 0.35)',
+        md: '0 20px 40px rgba(3, 7, 18, 0.45)',
       }
     },
   },

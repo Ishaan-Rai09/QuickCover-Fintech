@@ -203,6 +203,47 @@ def train():
     }
 
 
+@app.get("/api/metrics")
+def get_metrics():
+    df = load_data()
+    X, y, feature_cols, scaler = preprocess(df)
+    
+    _, X_test, _, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+    
+    metrics = {}
+    model_paths = {
+        "Linear Regression": "linear_regression",
+        "Ridge Regression": "ridge_regression",
+        "Random Forest": "random_forest"
+    }
+
+    for name, file_name in model_paths.items():
+        path = f"{MODEL_DIR}/{file_name}.pkl"
+        if not os.path.exists(path):
+            continue
+        model = joblib.load(path)
+        preds = model.predict(X_test)
+        rmse = float(np.sqrt(mean_squared_error(y_test, preds)))
+        mae  = float(mean_absolute_error(y_test, preds))
+        r2   = float(r2_score(y_test, preds))
+        
+        # Convert R2 to an "accuracy" percentage proxy (variance explained)
+        accuracy_pct = round(max(r2 * 100, 0), 2)
+        
+        metrics[name] = {
+            "rmse": round(rmse, 2),
+            "mae":  round(mae, 2),
+            "r2":   round(r2, 4),
+            "accuracy_pct": accuracy_pct
+        }
+        
+    if not metrics:
+        raise HTTPException(status_code=400, detail="Models not trained yet.")
+        
+    return metrics
+
 @app.post("/api/predict")
 def predict(data: PredictInput):
     # Load saved artifacts
@@ -316,3 +357,7 @@ def sample_predictions():
         })
 
     return {"profiles": results}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

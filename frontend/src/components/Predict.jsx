@@ -13,9 +13,20 @@ function riskLevel(amount) {
 function SliderField({ label, id, value, onChange, min, max, step = 1, unit = '' }) {
   return (
     <div className="mb-4">
-      <div className="flex justify-between mb-2">
+      <div className="flex justify-between items-center mb-2">
         <label htmlFor={id} className="text-sm font-semibold text-textPrimary">{label}</label>
-        <span className="text-sm font-bold text-primary bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100">{value}{unit}</span>
+        <div className="flex items-center bg-blue-50 border border-blue-200 rounded-md overflow-hidden shadow-inner">
+          <input 
+            type="number"
+            value={value}
+            min={min}
+            max={max}
+            step={step}
+            onChange={e => onChange(step === 1 ? parseInt(e.target.value) || 0 : parseFloat(e.target.value) || 0)}
+            className="w-20 text-right px-2 py-1 text-sm font-bold text-primary bg-transparent outline-none focus:bg-white transition-colors"
+          />
+          {unit && <span className="text-sm font-bold text-primary pr-2 pointer-events-none select-none">{unit}</span>}
+        </div>
       </div>
       <input 
         id={id} 

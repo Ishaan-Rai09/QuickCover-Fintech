@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { GLSLHills } from './ui/glsl-hills';
+import Casestudies from './ui/case-studies';
+import { ClientsSection } from './ClientsSection';
+import HoverFooter from './ui/hover-footer';
 
 const API = 'http://localhost:8000';
 
@@ -20,58 +24,73 @@ export default function Landing({ onEnter }) {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-[85vh] justify-center items-center text-center px-4">
-      <div className="max-w-3xl w-full">
-        <h1 className="text-5xl lg:text-6xl font-extrabold text-primary tracking-tight mb-6">
-          Intelligent Insurance Pricing
+    <div className="min-h-screen bg-background flex flex-col font-sans selection:bg-indigo-500/30 overflow-x-hidden">
+      
+      {/* Header */}
+      <header className="absolute top-0 w-full p-6 flex justify-between items-center z-50">
+        <h1 className="text-2xl font-bold tracking-tight text-white drop-shadow-md">
+          Quick<span className="text-indigo-400">Cover</span>
         </h1>
-        <p className="text-xl text-textMuted mb-10 leading-relaxed">
-          Leverage a robust ensemble of machine learning models to instantly calculate precise, context-aware health insurance premiums based on individual risk profiles.
-        </p>
-
-        <div className="bg-card rounded-2xl p-8 shadow-sm border border-border text-left mx-auto mb-10">
-          <h2 className="text-2xl font-bold text-textPrimary mb-6 border-b border-border pb-4">
-            Current Model Performance
-          </h2>
-          
-          {loading ? (
-            <div className="text-textMuted italic">Loading metrics processing...</div>
-          ) : metrics ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {Object.entries(metrics).map(([name, data]) => (
-                <div key={name} className="bg-gray-50 border border-gray-200 rounded-xl p-5">
-                  <h3 className="font-bold text-textPrimary mb-3">{name}</h3>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-textMuted font-medium">Accuracy (R²)</span>
-                      <span className="font-bold text-success">{data.accuracy_pct}%</span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-textMuted font-medium">Error (MAE)</span>
-                      <span className="font-semibold text-textPrimary">₹{data.mae.toLocaleString()}</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-1.5 mt-3">
-                      <div className="bg-primary h-1.5 rounded-full" style={{ width: `${data.accuracy_pct}%` }}></div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-danger italic">Model metrics unavailable. Ensure the backend is trained.</div>
-          )}
-        </div>
-
         <button 
           onClick={onEnter}
-          className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-primary hover:bg-blue-700 rounded-lg shadow-md transition-colors"
+          className="px-6 py-2.5 bg-white text-indigo-900 rounded-full font-semibold hover:bg-indigo-50 transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] transform hover:-translate-y-0.5"
         >
-          Open Prediction Dashboard
-          <svg className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
-          </svg>
+          Try Predictor
         </button>
+      </header>
+
+      {/* Hero Section */}
+      <div className="relative flex h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-black">
+        <GLSLHills />
+        <div className="space-y-6 pointer-events-none z-10 text-center absolute flex flex-col items-center">
+          <h1 className="font-semibold text-5xl md:text-7xl whitespace-pre-wrap text-white">
+            <span className="italic text-5xl md:text-6xl font-thin block mb-2">Predictions That Speak <br/> </span>
+            Louder Than Guesses
+          </h1>
+          <p className="text-sm md:text-lg text-white/80 max-w-2xl mx-auto px-4">
+            We craft stunning ML visuals and accurate risk experiences that help your insurance brand stand out and issue policies instantly.
+          </p>
+          <div className="pointer-events-auto mt-8 flex flex-col sm:flex-row gap-4">
+             <button
+                onClick={onEnter}
+                className="px-8 py-4 bg-indigo-600 text-white rounded-full font-bold text-lg hover:bg-indigo-500 transition-all shadow-[0_0_20px_rgba(79,70,229,0.4)]"
+              >
+                Calculate Premium Now
+              </button>
+          </div>
+          
+          {/* Live Metrics Ticker */}
+          <div className="mt-8 flex gap-6 px-6 py-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+            {loading ? (
+              <div className="text-white/60 text-sm">Loading Live Accuracy...</div>
+            ) : metrics ? (
+              <div className="flex gap-6 items-center">
+                {Object.entries(metrics).slice(0, 1).map(([name, data]) => (
+                  <React.Fragment key={name}>
+                    <div className="flex flex-col items-center">
+                      <span className="text-xs text-white/60 uppercase tracking-widest font-semibold">{name} R²</span>
+                      <span className="text-xl text-white font-bold">{data.accuracy_pct}%</span>
+                    </div>
+                    <div className="w-px h-8 bg-white/10"></div>
+                    <div className="flex flex-col items-center">
+                      <span className="text-xs text-white/60 uppercase tracking-widest font-semibold">{name} MAE</span>
+                      <span className="text-xl text-white font-bold">₹{Math.floor(data.mae).toLocaleString()}</span>
+                    </div>
+                  </React.Fragment>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </div> 
       </div>
+
+      <Casestudies />
+      <ClientsSection />
+      
+      <div className="px-6 py-12 bg-background z-20 relative">
+        <HoverFooter />
+      </div>
+      
     </div>
   );
 }
